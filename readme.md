@@ -44,13 +44,13 @@ Notes:
 * /scripts/check_nam_alleles.py:
 	* combines the output from the above scripts to make sure allele frequencies are mapped to the correct alleles. Still working on whether that is true or not.
 
-Some notes from Kate on here R datasets used by allelefreqs.R:
+Some notes on the R datasets used by allelefreqs.R:
 	
 		in a column you have a locus, 0, 1 or 2
 		S10_148970904_T is header
 		for example
-		0=TT
-		1=Tminor (het)
-		2 = minorhomo
+		0=majorhomo
+		1=Tmajor (het)
+		2 = TT
  
- This implies that the underscored allele is the major allele, however my scripting with check_nam_alleles.py suggests the opposite. I have asked Kate to check.
+So the underscore allele is the minor allele that the frequency has been calculated for.
