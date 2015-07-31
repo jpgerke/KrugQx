@@ -3,7 +3,7 @@ import pickle
 
 alleledict = pickle.load(open("../data/Namfreqs/alleledict.pkl", 'rb'))
 
-outfile = open("../data/Namfreqs/NAM_allfreqs_v3.csv", 'w')
+outfile = open("../data/Namfreqs/NAM_allfreqs.csv", 'w')
 outfile.write("SNP,A1,A2,FRQ\n")
 
 for chrom in xrange(1,11):
