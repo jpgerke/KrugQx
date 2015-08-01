@@ -1,0 +1,58 @@
+---
+output: 
+  html_document: 
+    highlight: tango
+    theme: united
+---
+
+#####Read in the Krug data from Tim/Kate
+```{r, warning=FALSE, message=FALSE}
+library(data.table)
+library(dplyr)
+library(stringr)
+```
+
+```{r}
+krug <- fread("../data/Krug_alleleFreq_filtered.txt", stringsAsFactors = F)
+krug$Chromosome <- str_replace(krug$Chromosome, 'chr', '')
+krugpos <- mutate(krug, index = str_c(Chromosome, Position, sep='_') )
+setkey(krugpos, index)
+str(krugpos)
+```
+
+#####read in my NAM frequencies
+```{r}
+nam = fread("../data/Namfreqs/NAM_allfreqs.csv", stringsAsFactors = F) %>% 
+        mutate(index = str_replace(SNP, 'S', ''))
+setkey(nam, index)
+str(nam)
+```              
+
+#####how much overlap between NAM and krug?
+```{r}
+nam_and_krug <- inner_join(nam, krugpos, by=c("index"))
+nrow(nam_and_krug)
+```
+
+Well that's not ideal
+
+#####Confirm with Kate's file from this morning
+```{r}
+mapping <- fread("../data/Justin_file_v2_v3_GBS", stringsAsFactors = F, na.strings = c("NA", "chrNA"))
+mapping <- mutate(mapping, v3chrom = as.integer(str_replace(v3_chr, 'chr', ''))) %>%
+  filter( !(is.na(v3chrom)), !(is.na(v2_chr)) ) %>%
+  mutate( v3_index = str_c(v3chrom, as.character(v3_coord), sep='_') ) %>%
+  mutate( v2_index = str_c(as.character(v2_chr), as.character(v2_coord), sep='_') )
+
+str(mapping)
+
+kate_v_nam = mutate(mapping, index = v2_index) %>%
+              inner_join(., nam)
+nrow(kate_v_nam)
+
+kate_v_krug <- mutate(mapping, index = v2_index) %>%
+                inner_join(., krugpos)          
+nrow(kate_v_krug)                        
+```
+
+Sad emoji.
