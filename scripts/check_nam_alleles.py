@@ -1,36 +1,57 @@
 
 import pickle
 
-alleledict = pickle.load(open("../data/Namfreqs/alleledict.pkl", 'rb'))
+#load the file and skip the header
+freqfile = open("../data/Namfreqs/NAMkids_frequencies.frq", 'r')
+header = freqfile.readline()
 
-outfile = open("../data/Namfreqs/NAM_allfreqs.csv", 'w')
-outfile.write("SNP,A1,A2,FRQ\n")
+#define the chroms and bases of interest
+chroms = map(str, range(1,11))
+bases = set(['A', 'C', 'T', 'G'])
 
-for chrom in xrange(1,11):
-	#loop through the frequency file
-	infile = open("../data/Namfreqs/frequencies_chr" + str(chrom) + ".csv", 'r')
-	print chrom
-	for line in infile:
-		entry = line.rstrip().split(',')
-		#construct the SNP id
-		ids = entry[0].split('_')
-		snp_id = '_'.join([ids[0], ids[1]])
-		#get the two alleles from the dict
-		myalleles = alleledict[snp_id]
-		#convert dots to dashes
-		if ids[2] == '.':
-			ids[2] = '-'
-		#allele 1 needs to be the allele in ids[2]
-		# if neither allele matches the underscore we have a problem
-		if ids[2] == myalleles[0]:
-			allele1 = myalleles[0]
-			allele2 = myalleles[1]
+#initialize the dictionary to store the data
+alleledict = {}
 
-		elif ids[2] == myalleles[1]:
-			allele1 = myalleles[1]
-			allele2 = myalleles[0]
-		else:	
-			raise ValueError, "Warning: allele does not match"
-		#print out non-indel alleles
-		if allele1 != '-' and allele2 != '-':
-			outfile.write(','.join([snp_id,allele1,allele2,entry[1]]) + '\n')
+#get down to business
+for line in freqfile:
+	entry = line.rstrip().split()
+	#has to be on a chrom
+	if entry[0] not in chroms:
+		continue
+	#has to be biallelic
+	elif int(entry[2]) != 2:
+		continue
+	#if it is biallelic and on a chrom, proceed:
+	else:
+		#grab the alleles and their frequencies
+		alleles = entry[4::]
+		freqs = [x.split(":") for x in alleles]
+		
+		#sanity check
+		assert len(freqs) == 2
+		
+		#make sure we're dealing with SNPs
+		gtype = set([x[0] for x in freqs])
+		if gtype.issubset(bases):
+			#build a dict for the allele
+			SNP = entry[0] + "_" + entry[1]
+			alleledict[SNP] = {}
+			for item in freqs:
+				alleledict[SNP][item[0]] = float(item[1])
+
+#make sure things look right
+n = 0
+for key, value in alleledict.iteritems():
+	print key, value
+	n += 1
+	if n == 10:
+		break
+
+print alleledict['1_8210']
+print len(alleledict.keys())
+
+#since everything looks right, dump out the dict
+pickle.dump(alleledict, open("../data/Namfreqs/namfreqdict.pkl", 'wb'))				
+
+
+

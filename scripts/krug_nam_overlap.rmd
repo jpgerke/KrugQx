@@ -56,3 +56,11 @@ nrow(kate_v_krug)
 ```
 
 Sad emoji.
+
+###Write out the overlapping SNPs for each set
+```{r}
+namdata_olap <- select(nam_and_krug, SNP, A1, A2, FRQ)
+krugdata_olap <- select(nam_and_krug, SNP, AlleleTracked:KSSAllele1)
+write.csv(namdata_olap, file="../data/NAM_freqs_olap_krug.csv", quote=F, row.names = F)
+write.csv(krugdata_olap, file="../data/Krug_freqs_olap.csv", quote=F, row.names=F)
+```

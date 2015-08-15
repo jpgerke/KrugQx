@@ -58,15 +58,34 @@ Some notes on the R datasets used by allelefreqs.R:
  
 So the underscore allele is the minor allele that the frequency has been calculated for. To match the format of the Qx scripts, I should make A1 the underscore allele.
 
-###Step 1: Make the match.pop.file
+###Step 1: Get the alleles and frequencies for the match.pop file
 
-#####Get the alleles Kate mapped onto NAM, make the match.pop.file
+#####Get the alleles Kate mapped onto NAM
 The file is: `../data/Namfreqs/NAM_allfreqs.csv`
 
 It contains `511532` SNPs
 
-* ./scripts/getalleles.sh > ./data/Namfreqs/alleles.txt
-* ./scripts/build_namalleles.py > ./data/Namfreqs/alleledict.pkl
-* ./scripts/check_namalleles.py > ./data/Namfreqs/NAM_allfreqs.csv
+	./scripts/getalleles.sh > ./data/Namfreqs/alleles.txt
+	./scripts/build_namalleles.py > ./data/Namfreqs/alleledict.pkl
+	./scripts/check_namalleles.py > ./data/Namfreqs/NAM_allfreqs.csv
 
-#
+#####Get the overlap with Krug
+The overlap is roughly 23,000 SNPs. Not a lot to go on. Script with this assessment is
+ 
+	./scripts/krug_nam_overlap.rmd
+
+This script also generates files with only the overlapping SNPs:
+
+	./data/NAM_freqs_olap_krug.csv
+	./data/Krug/freqs_olap.csv
+
+Next, I need to figure out if the allele tracked in NAM is the allele tracked in Krug.
+
+#####Calculate allele frequencies among NAM parents
+
+Get the NAM parent names by subtracting `keep_list_NAM_children.txt` from `keep_list_NAM.txt`
+
+	fgrep -x -f keep_list_NAM_children.txt -v keep_list_NAM.txt |
+	grep -v -i "Blank\|B73x" > NAM_Parents.txt
+	
+	
