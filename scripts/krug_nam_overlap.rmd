@@ -7,6 +7,7 @@ output:
 
 #####Read in the Krug data from Tim/Kate
 ```{r, warning=FALSE, message=FALSE}
+rm(list=ls())
 library(data.table)
 library(dplyr)
 library(stringr)
@@ -22,7 +23,7 @@ str(krugpos)
 
 #####read in my NAM frequencies
 ```{r}
-nam = fread("../data/Namfreqs/NAM_allfreqs.csv", stringsAsFactors = F) %>% 
+nam = fread("../data/Namfreqs/nam_genome_file.csv", stringsAsFactors = F) %>% 
         mutate(index = str_replace(SNP, 'S', ''))
 setkey(nam, index)
 str(nam)
