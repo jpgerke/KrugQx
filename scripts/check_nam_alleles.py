@@ -1,6 +1,16 @@
 
 import pickle
 
+#construct the dict to convert between v2 and v3
+condict = {}
+confile = open("../data/Namfreqs/alleleconversion.txt", 'r')
+for line in confile:
+	if line[0] != '#':
+		entry = line.rstrip().split()
+		v3 = entry[0] + '_' + entry[1]
+		condict[v3] = entry[2]
+#print condict
+
 #load the file and skip the header
 freqfile = open("../data/Namfreqs/NAMkids_frequencies.frq", 'r')
 header = freqfile.readline()
@@ -34,10 +44,11 @@ for line in freqfile:
 		gtype = set([x[0] for x in freqs])
 		if gtype.issubset(bases):
 			#build a dict for the allele
-			SNP = entry[0] + "_" + entry[1]
-			alleledict[SNP] = {}
+			v3SNP = entry[0] + "_" + entry[1]
+			v2SNP = condict[v3SNP]
+			alleledict[v2SNP] = {}
 			for item in freqs:
-				alleledict[SNP][item[0]] = float(item[1])
+				alleledict[v2SNP][item[0]] = float(item[1])
 
 #make sure things look right
 n = 0
@@ -47,7 +58,7 @@ for key, value in alleledict.iteritems():
 	if n == 10:
 		break
 
-print alleledict['1_8210']
+print alleledict['S1_8210']
 print len(alleledict.keys())
 
 #since everything looks right, dump out the dict
