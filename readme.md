@@ -76,6 +76,14 @@ Results:  out of `23178` SNPs, the allele tracked in Krug is one of the two alle
 
 #####Make the files formatted for Qx
 
+done with: `./scripts/makefiles.R`
+This code can be modified for alternative traits or SNP sets.
+
+#####Run the PA script
+Berg's code, with Tim's modification (and a couple of my own) is located in this repo as a subtree.
+
+The run was executed using using the file: `./PolygenicAdaptationScript/Run_Files/kwt_runfile.R`
+
 	
 
 
