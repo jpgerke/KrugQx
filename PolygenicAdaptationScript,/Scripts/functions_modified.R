@@ -11,7 +11,8 @@ PolygenicAdaptationFunction <- function ( gwas.data.file , freqs.file , env.var.
 	env.var.data <- lapply ( env.var.data , function ( ENV.VAR ) ENV.VAR [ order ( ENV.VAR$CLST ) , ] )
 	match.pop <- read.table ( match.pop.file , header = T )
 	dir.create ( paste ( path , "/Output" , sep = "" ) )
-
+  print(freqs$CLST)
+  print(env.var.data [[ 1 ]]$CLST)
 	# sanity checks
 	if ( any ( unlist ( lapply ( env.var.data , function ( y ) lapply ( env.var.data , function ( x ) !x$CLST %in% y$CLST ) ) ) ) ) stop ( "Environmental variable datasets differ in the number of populations." )
 	if ( any ( !freqs$CLST %in% env.var.data [[ 1 ]]$CLST ) ) stop ( "Frequency dataset has data for populations not present in environmental variable datasets.")

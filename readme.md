@@ -62,12 +62,7 @@ Now this needs to be joined with the krug SNPs. This was done using `./scripts/k
 	./data/NAM_freqs_olap_krug.csv
 	./data/Krug/freqs_olap.csv
 	
-	
-
-
-
-
-
+#####Make sure the two datasets have the same alleles!
 Next, I need to figure out if the allele tracked in NAM is the allele tracked in Krug.
 
 This was done with:
@@ -75,6 +70,11 @@ This was done with:
 	./scripts/krug_nam_alleles.py
 	
 Results:  out of `23178` SNPs, the allele tracked in Krug is one of the two alleles in NAM in `23018` of the caes.  These will be the SNPs to go forward with. The output files are:
+
+	./data/nam_olap_krug_biallelic.csv
+	./data/krug_olap_biallelic.csv
+
+#####Make the files formatted for Qx
 
 	
 

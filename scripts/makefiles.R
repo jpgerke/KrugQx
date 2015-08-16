@@ -71,7 +71,7 @@ freqs_file <- inner_join(with_ID, pop_genome_file, by="SNP") %>%
   select(SNP, CLST, A1, A2, FRQ, POS, CHR)
 
 
-write.csv(freqs_file, file = "../qxfiles/1kwt/freqfile2.csv", quote=F, row.names = F)
-write.csv(gwas_data_file_final, file = "../qxfiles/1kwt/gwas_file2.csv", quote=F, row.names = F)
-write.csv(longform, file = "../qxfiles/1kwt/full_dataset_file2.csv", quote=F, row.names = F)
-write.csv(match_pop_file, file = "../qxfiles/1kwt/match_pop_file2.csv", quote=F, row.names=F)
+write.table(freqs_file, file = "../qxfiles/1kwt/freqfile2.csv", quote=F, row.names = F, sep="\t")
+write.table(gwas_data_file_final, file = "../qxfiles/1kwt/gwas_file2.csv", quote=F, row.names = F, sep = "\t")
+write.table(longform, file = "../qxfiles/1kwt/full_dataset_file2.csv", quote=F, row.names = F, sep = "\t")
+write.table(match_pop_file, file = "../qxfiles/1kwt/match_pop_file2.csv", quote=F, row.names=F, sep = "\t")

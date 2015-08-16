@@ -1,7 +1,24 @@
-setwd("/Users/beissinger/Documents/PolygenicAdaptation/AllPhenos")
-source ( "Scripts/CreateTraitFile.R")
-source ( "Scripts/functions_modified.R")
+rm(list=ls())
+source("../Scripts/functions_modified.R")
 
+PolygenicAdaptationFunction ( 
+  gwas.data.file = "../../qxfiles/1kwt/gwas_file2.csv", 
+  freqs.file = "../../qxfiles/1kwt/freqfile2.csv" , 
+  env.var.data.files = list ("../EnvVar/Environment.txt" ) , 
+  # Note: you can supply as many env.var.data.files concurrently as you want. If only supplying one file it should still be included in a list, e.g. env.var.data.files = list ( "Example/EnvVar/HGDP_LATS_GLOBAL")
+  match.pop.file = "../../qxfiles/1kwt/match_pop_file2.csv",
+  full.dataset.file = "../../qxfiles/1kwt/full_dataset_file2.csv" , 
+  path = "../../qxfiles/1kwt/output/" , 
+  match.categories = c ("FRQ") ,
+  match.bins = list ( seq ( 0 , 1, 0.5 )) ,
+  cov.SNPs.per.cycle = 5000 , 
+  cov.cycles = 1 , 
+  null.phenos.per.cycle = 1000 , 
+  null.cycles = 1 ,
+  load.cov.mat = F ,
+  sim.null = T ,
+  check.allele.orientation = T
+)
 ######################### DO ANALYSIS FOR GWAS P-VALUES < 1e-4 #########################
 Out <- list()
 for(i in 1:22){
@@ -25,10 +42,6 @@ Out[[i]] <- PolygenicAdaptationFunction (	gwas.data.file = traitFile,
 							sim.null = F ,
 							check.allele.orientation = F
 							)
-names(Out)[i] <- pathDir
-print("------------------------------------------------------------------")
-print(Out[[i]])
-}
 
 
 ### Make table of asymptotic Qx p-values
@@ -128,48 +141,3 @@ dev.off()
 
 
 
-Warning messages:
-1: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-2: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-3: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-4: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-5: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-6: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-7: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-8: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-9: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-10: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-11: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-12: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-13: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-14: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-15: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-16: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-17: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-18: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-19: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-20: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-21: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter
-22: In mapply(rep, x = split.sampled.cov.data, times = sampled.SNPs.count) :
-  longer argument not a multiple of length of shorter

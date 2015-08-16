@@ -1,5 +1,4 @@
 CLST	ENV	REG
-MH	50	4
-ML	4	2
-SAH	1	18
-SAL	10	33
+KC0Allele1	50	4
+KLSAllele1	4	2
+KSSAllele1	1	18
